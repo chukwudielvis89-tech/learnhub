@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>LearnHub — Learn Anything</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="splash"><div class="splash-logo">LEARNHUB</div><div class="splash-sub">KNOWLEDGE IS POWER</div><div class="splash-bar"><div class="splash-progress"></div></div></div>
+<div id="app">
+  <header>
+    <div class="logo">LEARN<span>HUB</span></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <div class="level-display" id="level-display">LVL 1 · Newbie</div>
+      <div class="header-xp" id="xp-display">⚡ 0 XP</div>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-greeting">// WELCOME BACK, HACKER</div>
+      <div class="hero-title">Ready to <span>level up</span>?</div>
+      <div class="hero-subtitle">Choose your mission today</div>
+    </div>
+    <div class="streak-card">
+      <div class="streak-info"><h3>// DAY STREAK</h3><div class="streak-num" id="streak-num">1</div><div style="font-size:0.75rem;color:var(--text2);margin-top:2px">Keep it going!</div></div>
+      <div class="streak-emoji">🔥</div>
+    </div>
+    <div class="section-title">// CATEGORIES</div>
+    <div class="cat-grid">
+      <div class="cat-card" style="--cat-color:#ff3e6c;--cat-glow:rgba(255,62,108,0.15)" onclick="goToLearn('cyber')"><div class="cat-count">5 lessons</div><div class="cat-icon">🛡️</div><div class="cat-name">CYBERSECURITY</div><div class="cat-desc">Protect systems & networks</div></div>
+      <div class="cat-card" style="--cat-color:#00f5c4;--cat-glow:rgba(0,245,196,0.15)" onclick="goToLearn('hacking')"><div class="cat-count">5 lessons</div><div class="cat-icon">💻</div><div class="cat-name">ETH. HACKING</div><div class="cat-desc">Penetration testing basics</div></div>
+      <div class="cat-card" style="--cat-color:#7b2fff;--cat-glow:rgba(123,47,255,0.15)" onclick="goToLearn('coding')"><div class="cat-count">5 lessons</div><div class="cat-icon">⚙️</div><div class="cat-name">CODING</div><div class="cat-desc">Python, JS, Web Dev</div></div>
+      <div class="cat-card" style="--cat-color:#ffd700;--cat-glow:rgba(255,215,0,0.15)" onclick="goToLearn('content')"><div class="cat-count">5 lessons</div><div class="cat-icon">🎬</div><div class="cat-name">CONTENT</div><div class="cat-desc">Create viral content</div></div>
+    </div>
+    <div class="section-title">// QUICK START</div>
+    <div class="lessons-scroll">
+      <div class="lesson-chip" onclick="openLesson('what-is-hacking')"><div class="lesson-chip-tag">HACKING</div><div class="lesson-chip-title">What is Ethical Hacking?</div></div>
+      <div class="lesson-chip" onclick="openLesson('python-basics')"><div class="lesson-chip-tag">CODING</div><div class="lesson-chip-title">Python Fundamentals</div></div>
+      <div class="lesson-chip" onclick="openLesson('network-security')"><div class="lesson-chip-tag">CYBER</div><div class="lesson-chip-title">How Networks Work</div></div>
+      <div class="lesson-chip" onclick="openLesson('youtube-growth')"><div class="lesson-chip-tag">CONTENT</div><div class="lesson-chip-title">YouTube Growth Secrets</div></div>
+      <div class="lesson-chip" onclick="openLesson('linux-basics')"><div class="lesson-chip-tag">HACKING</div><div class="lesson-chip-title">Linux for Hackers</div></div>
+      <div class="lesson-chip" onclick="openLesson('sql-injection')"><div class="lesson-chip-tag">HACKING</div><div class="lesson-chip-title">SQL Injection Basics</div></div>
+    </div>
+  </div>
+
+  <!-- LEARN -->
+  <div class="page" id="page-learn">
+    <div class="page-header"><h1 id="learn-title">All Topics</h1><p id="learn-sub">Choose a topic to begin</p></div>
+    <div class="topic-list" id="topic-list"></div>
+  </div>
+
+  <!-- AI TUTOR -->
+  <div class="page ai-page" id="page-ai">
+    <div class="ai-header"><h1>🤖 AI TUTOR</h1><p>Ask anything about tech, hacking, coding...</p></div>
+    <div class="suggested-chips">
+      <div class="chip" onclick="sendChip(this)">What is SQL injection?</div>
+      <div class="chip" onclick="sendChip(this)">Explain Python loops</div>
+      <div class="chip" onclick="sendChip(this)">How to start hacking?</div>
+      <div class="chip" onclick="sendChip(this)">What is a firewall?</div>
+      <div class="chip" onclick="sendChip(this)">Best hacking tools 2025</div>
+    </div>
+    <div class="chat-area" id="chat-area">
+      <div class="msg ai"><div class="msg-label">// AI TUTOR</div>Hey! I'm your AI tutor 🤖 Ask me anything about cybersecurity, ethical hacking, coding, or content creation!</div>
+    </div>
+    <div class="typing-indicator" id="typing"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chat-input" placeholder="Ask your question..." rows="1" onkeydown="handleKey(event)"></textarea>
+      <button class="send-btn" id="send-btn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="page" id="page-progress">
+    <div class="progress-page">
+      <div class="progress-title">YOUR PROGRESS</div>
+      <div class="progress-sub">Track your learning journey</div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num" id="stat-lessons">0</div><div class="stat-label">LESSONS DONE</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-xp">0</div><div class="stat-label">TOTAL XP</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-streak2">1</div><div class="stat-label">DAY STREAK</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-quizzes">0</div><div class="stat-label">QUIZZES PASSED</div></div>
+      </div>
+      <div class="section-title" style="padding:0;margin-bottom:14px">// SKILL PROGRESS</div>
+      <div class="prog-bar-wrap"><div class="prog-bar-label"><span>🛡️ Cybersecurity</span><span id="pb-cyber-label">0%</span></div><div class="prog-bar"><div class="prog-bar-fill" id="pb-cyber" style="width:0%"></div></div></div>
+      <div class="prog-bar-wrap"><div class="prog-bar-label"><span>💻 Ethical Hacking</span><span id="pb-hack-label">0%</span></div><div class="prog-bar"><div class="prog-bar-fill" id="pb-hack" style="width:0%"></div></div></div>
+      <div class="prog-bar-wrap"><div class="prog-bar-label"><span>⚙️ Coding</span><span id="pb-code-label">0%</span></div><div class="prog-bar"><div class="prog-bar-fill" id="pb-code" style="width:0%"></div></div></div>
+      <div class="prog-bar-wrap"><div class="prog-bar-label"><span>🎬 Content Creation</span><span id="pb-content-label">0%</span></div><div class="prog-bar"><div class="prog-bar-fill" id="pb-content" style="width:0%"></div></div></div>
+      <div class="section-title" style="padding:0;margin:20px 0 14px">// ACHIEVEMENTS</div>
+      <div class="achievement-grid">
+        <div class="achievement" id="ach-first"><div class="ach-icon">🎯</div><div><div class="ach-name">First Lesson</div><div class="ach-desc">Complete 1 lesson</div></div></div>
+        <div class="achievement locked" id="ach-hacker"><div class="ach-icon">🐱‍💻</div><div><div class="ach-name">Baby Hacker</div><div class="ach-desc">Finish 5 lessons</div></div></div>
+        <div class="achievement locked" id="ach-quiz"><div class="ach-icon">🧠</div><div><div class="ach-name">Quiz Master</div><div class="ach-desc">Pass 3 quizzes</div></div></div>
+        <div class="achievement locked" id="ach-streak"><div class="ach-icon">🔥</div><div><div class="ach-name">On Fire</div><div class="ach-desc">7-day streak</div></div></div>
+        <div class="achievement locked" id="ach-xp"><div class="ach-icon">⚡</div><div><div class="ach-name">XP Master</div><div class="ach-desc">Earn 500 XP</div></div></div>
+        <div class="achievement locked" id="ach-ten"><div class="ach-icon">🏆</div><div><div class="ach-name">Scholar</div><div class="ach-desc">Complete 10 lessons</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="page" id="page-tools">
+    <div class="tools-page">
+      <div class="tools-title">TOOLS & RESOURCES</div>
+      <div class="tools-sub">Essential resources for your learning</div>
+      <div class="tool-card" onclick="openModal('kali')"><div class="tool-icon">🐉</div><div class="tool-info"><h3>KALI LINUX GUIDE</h3><p>Setup and tools overview</p></div><div class="tool-arrow">›</div></div>
+      <div class="tool-card" onclick="openModal('cheatsheet')"><div class="tool-icon">📋</div><div class="tool-info"><h3>HACKING CHEATSHEET</h3><p>Commands & shortcuts</p></div><div class="tool-arrow">›</div></div>
+      <div class="tool-card" onclick="openModal('roadmap')"><div class="tool-icon">🗺️</div><div class="tool-info"><h3>LEARNING ROADMAP</h3><p>Where to start & what to learn</p></div><div class="tool-arrow">›</div></div>
+      <div class="tool-card" onclick="openModal('resources')"><div class="tool-icon">🔗</div><div class="tool-info"><h3>FREE RESOURCES</h3><p>Best free sites & tools</p></div><div class="tool-arrow">›</div></div>
+      <div class="tool-card" onclick="openModal('glossary')"><div class="tool-icon">📖</div><div class="tool-info"><h3>TECH GLOSSARY</h3><p>Key terms explained</p></div><div class="tool-arrow">›</div></div>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <button class="nav-btn active" onclick="switchPage('home',this)"><span class="icon">🏠</span>HOME</button>
+  <button class="nav-btn" onclick="switchPage('learn',this)"><span class="icon">📚</span>LEARN</button>
+  <button class="nav-btn" onclick="switchPage('ai',this)"><span class="icon">🤖</span>AI TUTOR</button>
+  <button class="nav-btn" onclick="switchPage('progress',this)"><span class="icon">📊</span>PROGRESS</button>
+  <button class="nav-btn" onclick="switchPage('tools',this)"><span class="icon">🛠️</span>TOOLS</button>
+</nav>
+
+<div id="lesson-view">
+  <div class="lesson-header">
+    <button class="back-btn" onclick="closeLesson()">‹</button>
+    <div class="lesson-header-info"><h2 id="lesson-title-header">Lesson</h2><span id="lesson-cat-header">Category</span></div>
+  </div>
+  <div class="lesson-body"><div id="lesson-content-area" class="lesson-content"></div></div>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕ Close</button>
+    <div class="modal-title" id="modal-title"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
